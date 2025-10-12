@@ -7,36 +7,50 @@ function entermain() {
   if (main) main.style.display = 'flex';
 
   if (audio) {
-    // Ensure audio is allowed to start on mobile tap
     audio.currentTime = 0;
     audio.loop = true;
     audio.volume = 1.0;
-    audio.play().then(() => {
-      console.log('Music started');
-    }).catch(err => {
-      console.warn('Playback failed:', err);
-      // Add fallback button
-      const btn = document.createElement('button');
-      btn.textContent = 'Tap to Play Music';
-      btn.style.position = 'absolute';
-      btn.style.bottom = '20px';
-      btn.style.left = '50%';
-      btn.style.transform = 'translateX(-50%)';
-      btn.style.padding = '10px 20px';
-      btn.style.border = 'none';
-      btn.style.borderRadius = '8px';
-      btn.style.fontSize = '18px';
-      btn.style.cursor = 'pointer';
-      btn.onclick = () => {
-        audio.play();
-        btn.remove();
-      };
-      document.body.appendChild(btn);
-    });
+
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => console.log("🎵 Music started"))
+        .catch(err => {
+          console.warn("Autoplay prevented:", err);
+          const retry = document.createElement('button');
+          retry.textContent = 'Tap to Play Music';
+          retry.style.position = 'absolute';
+          retry.style.bottom = '30px';
+          retry.style.left = '50%';
+          retry.style.transform = 'translateX(-50%)';
+          retry.style.padding = '12px 24px';
+          retry.style.borderRadius = '10px';
+          retry.style.border = 'none';
+          retry.style.background = '#908d7c';
+          retry.style.color = '#fff';
+          retry.style.fontSize = '18px';
+          retry.style.cursor = 'pointer';
+          retry.style.fontFamily = "'Pangolin', cursive";
+          retry.onclick = () => {
+            audio.play();
+            retry.remove();
+          };
+          document.body.appendChild(retry);
+        });
+    }
   }
 }
 
+// iPhone/iPad gesture-safe listeners
+document.addEventListener('DOMContentLoaded', () => {
+  const enterBtn = document.getElementById('enter');
+  if (enterBtn) {
+    enterBtn.addEventListener('click', entermain, { passive: true });
+    enterBtn.addEventListener('touchstart', entermain, { passive: true });
+  }
+});
 
+// sparkle effect
 let sparkles = 50;
 let x = 400, y = 300, ox = 400, oy = 300;
 let swide = 800, shigh = 600, sleft = 0, sdown = 0;
@@ -150,7 +164,7 @@ function updateTiny(i) {
   }
 }
 
-document.onmousemove = function(e) {
+document.onmousemove = e => {
   x = e.pageX;
   y = e.pageY;
 };
