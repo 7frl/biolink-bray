@@ -4,55 +4,105 @@
   box-sizing: border-box;
 }
 
-a {
-  text-decoration: none;
-}
-
 body {
   height: 100vh;
-  background-color: white;
-  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
+  font-family: monospace;
+  background-color: #2b2d31;
+  color: white;
 }
 
-.container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-}
-
-.centered {
+#enter {
+  font-size: 36px;
+  cursor: pointer;
   position: absolute;
+  color: white;
+  z-index: 1000;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center;
-  color: #bcc7e8; /* light blue tint */
-  text-shadow: 0 0 8px rgba(188, 199, 232, 0.5); /* soft glow */
 }
 
-.centered h1 {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
+#main {
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-image: url('/background.mp4');
+  background-size: cover;
+  background-position: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  padding: 40px;
+}
+
+.profile {
+  position: relative;
+  width: 250px;
+  height: 335px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.profile:hover {
+  transform: scale(1.05);
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 50%;
+  margin-top: 20px;
+}
+
+.name {
+  font-size: 24px;
+  color: white;
+  margin-top: 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+  text-shadow: 0 0 5px white, 0 0 10px white, 0 0 20px white, 0 0 30px white;
+}
+
+.name:hover {
+  transform: scale(1.2);
+  text-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white, 0 0 40px white;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
 }
 
 .icons a {
-  margin: 0 12px;
-  color: #bcc7e8;
-  font-size: 2rem;
-  text-shadow: 0 0 8px rgba(188, 199, 232, 0.5); /* glow on icons */
-  transition: transform 0.2s ease, color 0.3s;
+  color: white;
+  font-size: 20px;
+  transition: transform 0.3s ease;
 }
 
 .icons a:hover {
-  transform: scale(1.1);
-  color: #a5b3db; /* slightly darker on hover */
-}
-
-.character {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  max-height: 90vh;
-  pointer-events: none; /* so it doesn’t block anything */
+  transform: scale(1.2);
 }
