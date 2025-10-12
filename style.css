@@ -27,7 +27,7 @@ body {
   background: none;
   border: none;
   outline: none;
-  font-family: 'Pangolin', cursive;
+  text-shadow: 0 0 10px white;
 }
 
 #main {
