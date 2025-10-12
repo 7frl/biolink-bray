@@ -7,11 +7,35 @@ function entermain() {
   if (main) main.style.display = 'flex';
 
   if (audio) {
-    audio.play().catch(() => {
-      console.warn('Autoplay prevented. User interaction required.');
+    // Ensure audio is allowed to start on mobile tap
+    audio.currentTime = 0;
+    audio.loop = true;
+    audio.volume = 1.0;
+    audio.play().then(() => {
+      console.log('Music started');
+    }).catch(err => {
+      console.warn('Playback failed:', err);
+      // Add fallback button
+      const btn = document.createElement('button');
+      btn.textContent = 'Tap to Play Music';
+      btn.style.position = 'absolute';
+      btn.style.bottom = '20px';
+      btn.style.left = '50%';
+      btn.style.transform = 'translateX(-50%)';
+      btn.style.padding = '10px 20px';
+      btn.style.border = 'none';
+      btn.style.borderRadius = '8px';
+      btn.style.fontSize = '18px';
+      btn.style.cursor = 'pointer';
+      btn.onclick = () => {
+        audio.play();
+        btn.remove();
+      };
+      document.body.appendChild(btn);
     });
   }
 }
+
 
 let sparkles = 50;
 let x = 400, y = 300, ox = 400, oy = 300;
