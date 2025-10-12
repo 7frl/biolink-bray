@@ -24,6 +24,10 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   transition: opacity 0.8s ease;
+  background: none;
+  border: none;
+  outline: none;
+  font-family: 'Pangolin', cursive;
 }
 
 #main {
