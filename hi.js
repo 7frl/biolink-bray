@@ -7,46 +7,39 @@ function entermain() {
   if (main) main.style.display = 'flex';
 
   if (audio) {
-    audio.currentTime = 0;
     audio.loop = true;
     audio.volume = 1.0;
 
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => console.log("🎵 Music started"))
-        .catch(err => {
-          console.warn("Autoplay prevented:", err);
-          const retry = document.createElement('button');
-          retry.textContent = 'Tap to Play Music';
-          retry.style.position = 'absolute';
-          retry.style.bottom = '30px';
-          retry.style.left = '50%';
-          retry.style.transform = 'translateX(-50%)';
-          retry.style.padding = '12px 24px';
-          retry.style.borderRadius = '10px';
-          retry.style.border = 'none';
-          retry.style.background = '#908d7c';
-          retry.style.color = '#fff';
-          retry.style.fontSize = '18px';
-          retry.style.cursor = 'pointer';
-          retry.style.fontFamily = "'Pangolin', cursive";
-          retry.onclick = () => {
-            audio.play();
-            retry.remove();
-          };
-          document.body.appendChild(retry);
-        });
-    }
+    // iPhone requires direct gesture playback
+    audio.play().catch(() => {
+      const retry = document.createElement('div');
+      retry.textContent = 'tap to play music';
+      retry.style.position = 'absolute';
+      retry.style.bottom = '30px';
+      retry.style.left = '50%';
+      retry.style.transform = 'translateX(-50%)';
+      retry.style.padding = '10px 20px';
+      retry.style.color = '#fff';
+      retry.style.fontSize = '20px';
+      retry.style.fontFamily = "'Pangolin', cursive";
+      retry.style.background = 'none';
+      retry.style.cursor = 'pointer';
+      retry.style.textShadow = '0 0 10px white';
+      retry.onclick = () => {
+        audio.play();
+        retry.remove();
+      };
+      document.body.appendChild(retry);
+    });
   }
 }
 
-// iPhone/iPad gesture-safe listeners
+// handle tap/click
 document.addEventListener('DOMContentLoaded', () => {
-  const enterBtn = document.getElementById('enter');
-  if (enterBtn) {
-    enterBtn.addEventListener('click', entermain, { passive: true });
-    enterBtn.addEventListener('touchstart', entermain, { passive: true });
+  const enterDiv = document.getElementById('enter');
+  if (enterDiv) {
+    enterDiv.addEventListener('click', entermain);
+    enterDiv.addEventListener('touchstart', entermain, { passive: true });
   }
 });
 
