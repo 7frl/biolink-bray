@@ -160,3 +160,24 @@ body {
     drop-shadow(0 0 14px rgba(255,255,255,0.8))
     drop-shadow(0 0 28px rgba(255,255,255,0.6));
 }
+
+/* --------------------
+   VIEW COUNTER
+-------------------- */
+
+#views {
+  margin-top: 10px;
+  font-size: 14px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.85;
+  text-shadow:
+    0 0 6px rgba(255,255,255,0.6),
+    0 0 12px rgba(255,255,255,0.4);
+}
+
+#views i {
+  font-size: 13px;
+}
