@@ -40,7 +40,7 @@ function entermain() {
 
     audio.play().catch(() => {
       const retry = document.createElement('div');
-      retry.textContent = 'tap to play music';
+      retry.textContent = 'error - refresh page';
       retry.style.position = 'absolute';
       retry.style.bottom = '30px';
       retry.style.left = '50%';
