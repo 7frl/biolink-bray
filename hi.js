@@ -1,3 +1,31 @@
+// --------------------
+// RANDOM MUSIC PLAYER
+// --------------------
+
+const songs = [
+  "rifle.mp3",
+  "now & later.mp3",
+  "Party At My Place.mp3",
+  "bby ur so pretty.mp3"
+];
+
+// Pick random song
+const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+document.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("audio");
+
+  if (audio) {
+    audio.src = randomSong;
+    audio.load();
+  }
+});
+
+
+// --------------------
+// ENTER MAIN
+// --------------------
+
 function entermain() {
   const enter = document.getElementById('enter');
   const main = document.getElementById('main');
@@ -10,7 +38,6 @@ function entermain() {
     audio.loop = true;
     audio.volume = 1.0;
 
-    // iPhone requires direct gesture playback
     audio.play().catch(() => {
       const retry = document.createElement('div');
       retry.textContent = 'tap to play music';
@@ -25,25 +52,36 @@ function entermain() {
       retry.style.background = 'none';
       retry.style.cursor = 'pointer';
       retry.style.textShadow = '0 0 10px white';
+
       retry.onclick = () => {
         audio.play();
         retry.remove();
       };
+
       document.body.appendChild(retry);
     });
   }
 }
 
-// handle tap/click
+
+// --------------------
+// CLICK HANDLER
+// --------------------
+
 document.addEventListener('DOMContentLoaded', () => {
   const enterDiv = document.getElementById('enter');
+
   if (enterDiv) {
     enterDiv.addEventListener('click', entermain);
     enterDiv.addEventListener('touchstart', entermain, { passive: true });
   }
 });
 
-// sparkle effect
+
+// --------------------
+// SPARKLE EFFECT
+// --------------------
+
 let sparkles = 50;
 let x = 400, y = 300, ox = 400, oy = 300;
 let swide = 800, shigh = 600, sleft = 0, sdown = 0;
@@ -62,12 +100,15 @@ window.onload = function() {
     const s = createDiv(5, 5);
     const h = createDiv(1, 5);
     const v = createDiv(5, 1);
+
     s.appendChild(h);
     s.appendChild(v);
+
     h.style.top = '2px';
     h.style.left = '0px';
     v.style.top = '0px';
     v.style.left = '2px';
+
     document.body.appendChild(star[i] = s);
     starv[i] = 0;
   }
@@ -85,14 +126,19 @@ function sparkle() {
       if (!starv[c]) {
         starx[c] = x;
         stary[c] = y + 1;
+
         const el = star[c];
+
         el.style.left = x + 'px';
         el.style.top = (y + 1) + 'px';
         el.style.clip = 'rect(0px, 5px, 5px, 0px)';
+
         el.childNodes[0].style.backgroundColor =
         el.childNodes[1].style.backgroundColor = 'white';
+
         el.style.visibility = 'visible';
         starv[c] = 50;
+
         break;
       }
     }
@@ -121,16 +167,21 @@ function updateStar(i) {
       star[i].style.visibility = 'hidden';
       starv[i] = 0;
     }
+
   } else {
+
     tinyv[i] = 50;
     tinyx[i] = starx[i];
     tinyy[i] = stary[i];
+
     const t = tiny[i];
+
     t.style.top = tinyy[i] + 'px';
     t.style.left = tinyx[i] + 'px';
     t.style.width = '2px';
     t.style.height = '2px';
     t.style.backgroundColor = star[i].childNodes[0].style.backgroundColor;
+
     star[i].style.visibility = 'hidden';
     t.style.visibility = 'visible';
   }
@@ -145,6 +196,7 @@ function updateTiny(i) {
   if (tinyv[i]) {
     tinyy[i] += 1 + Math.random() * 3;
     tinyx[i] += (i % 5 - 2) / 5;
+
     if (tinyy[i] < shigh + sdown) {
       tiny[i].style.top = tinyy[i] + 'px';
       tiny[i].style.left = tinyx[i] + 'px';
@@ -152,10 +204,16 @@ function updateTiny(i) {
       tiny[i].style.visibility = 'hidden';
       tinyv[i] = 0;
     }
+
   } else {
     tiny[i].style.visibility = 'hidden';
   }
 }
+
+
+// --------------------
+// EVENTS
+// --------------------
 
 document.onmousemove = e => {
   x = e.pageX;
@@ -177,9 +235,11 @@ function updateSize() {
 
 function createDiv(h, w) {
   const div = document.createElement('div');
+
   div.style.position = 'absolute';
   div.style.height = h + 'px';
   div.style.width = w + 'px';
   div.style.overflow = 'hidden';
+
   return div;
 }
