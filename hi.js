@@ -9,46 +9,45 @@ const songs = [
   "bby ur so pretty.mp3"
 ];
 
-const randomSong = songs[Math.floor(Math.random() * songs.length)];
-
 document.addEventListener("DOMContentLoaded", () => {
   const audio = document.getElementById("audio");
-  if (audio) {
-    audio.src = randomSong;
-    audio.load();
-  }
+  if (!audio) return;
+
+  audio.src = songs[Math.floor(Math.random() * songs.length)];
+  audio.load();
 });
 
 // --------------------
-// VIEW COUNTER
+// VIEW COUNTER (GitHub Pages safe)
 // --------------------
 
-const VIEW_NAMESPACE = "february-site";
-const VIEW_KEY = "february-main";
+const VIEW_NAMESPACE = "february-gh-pages";
+const VIEW_KEY = "main";
 
-function updateViews() {
-  const viewEl = document.getElementById("viewCount");
-  if (!viewEl) return;
+async function updateViews() {
+  const el = document.getElementById("viewCount");
+  if (!el) return;
 
-  // prevent double counting per session
-  if (sessionStorage.getItem("viewed")) {
-    fetch(`https://api.countapi.xyz/get/${VIEW_NAMESPACE}/${VIEW_KEY}`)
-      .then(res => res.json())
-      .then(data => {
-        viewEl.textContent = data.value.toLocaleString();
-      });
-    return;
+  try {
+    let data;
+
+    if (!sessionStorage.getItem("counted")) {
+      const res = await fetch(
+        `https://api.countapi.xyz/hit/${VIEW_NAMESPACE}/${VIEW_KEY}`
+      );
+      data = await res.json();
+      sessionStorage.setItem("counted", "true");
+    } else {
+      const res = await fetch(
+        `https://api.countapi.xyz/get/${VIEW_NAMESPACE}/${VIEW_KEY}`
+      );
+      data = await res.json();
+    }
+
+    el.textContent = data.value.toLocaleString();
+  } catch {
+    el.textContent = "—";
   }
-
-  fetch(`https://api.countapi.xyz/hit/${VIEW_NAMESPACE}/${VIEW_KEY}?cache=false`)
-    .then(res => res.json())
-    .then(data => {
-      viewEl.textContent = data.value.toLocaleString();
-      sessionStorage.setItem("viewed", "true");
-    })
-    .catch(() => {
-      viewEl.textContent = "—";
-    });
 }
 
 // --------------------
@@ -56,40 +55,37 @@ function updateViews() {
 // --------------------
 
 function entermain() {
-  const enter = document.getElementById("enter");
-  const main = document.getElementById("main");
+  document.getElementById("enter")?.remove();
+  document.getElementById("main").style.display = "flex";
+
+  updateViews();
+
   const audio = document.getElementById("audio");
+  if (!audio) return;
 
-  if (enter) enter.style.display = "none";
-  if (main) main.style.display = "flex";
+  audio.loop = true;
+  audio.volume = 1;
 
-  updateViews(); // ← counter updates AFTER entering
-
-  if (audio) {
-    audio.loop = true;
-    audio.volume = 1.0;
-
-    audio.play().catch(() => {
-      const retry = document.createElement("div");
-      retry.textContent = "tap to enable sound";
-      retry.style.position = "absolute";
-      retry.style.bottom = "30px";
-      retry.style.left = "50%";
-      retry.style.transform = "translateX(-50%)";
-      retry.style.color = "#fff";
-      retry.style.fontSize = "20px";
-      retry.style.fontFamily = "'Pangolin', cursive";
-      retry.style.cursor = "pointer";
-      retry.style.textShadow = "0 0 10px white";
-
-      retry.onclick = () => {
-        audio.play();
-        retry.remove();
-      };
-
-      document.body.appendChild(retry);
-    });
-  }
+  audio.play().catch(() => {
+    const tap = document.createElement("div");
+    tap.textContent = "tap to enable sound";
+    tap.style.cssText = `
+      position:fixed;
+      bottom:30px;
+      left:50%;
+      transform:translateX(-50%);
+      color:white;
+      font-size:20px;
+      text-shadow:0 0 10px white;
+      cursor:pointer;
+      z-index:9999;
+    `;
+    tap.onclick = () => {
+      audio.play();
+      tap.remove();
+    };
+    document.body.appendChild(tap);
+  });
 }
 
 // --------------------
@@ -97,15 +93,15 @@ function entermain() {
 // --------------------
 
 document.addEventListener("DOMContentLoaded", () => {
-  const enterDiv = document.getElementById("enter");
-  if (!enterDiv) return;
+  const enter = document.getElementById("enter");
+  if (!enter) return;
 
-  enterDiv.addEventListener("click", entermain);
-  enterDiv.addEventListener("touchstart", entermain, { passive: true });
+  enter.addEventListener("click", entermain);
+  enter.addEventListener("touchstart", entermain, { passive: true });
 });
 
 // --------------------
-// SPARKLE EFFECT
+// SPARKLE EFFECT (unchanged)
 // --------------------
 
 let sparkles = 50;
@@ -126,10 +122,8 @@ window.onload = function () {
     const s = createDiv(5, 5);
     const h = createDiv(1, 5);
     const v = createDiv(5, 1);
-
     s.appendChild(h);
     s.appendChild(v);
-
     h.style.top = "2px";
     v.style.left = "2px";
 
@@ -150,11 +144,9 @@ function sparkle() {
       if (!starv[c]) {
         starx[c] = x;
         stary[c] = y + 1;
-
-        const el = star[c];
-        el.style.left = x + "px";
-        el.style.top = (y + 1) + "px";
-        el.style.visibility = "visible";
+        star[c].style.left = x + "px";
+        star[c].style.top = y + 1 + "px";
+        star[c].style.visibility = "visible";
         starv[c] = 50;
         break;
       }
@@ -173,7 +165,6 @@ function updateStar(i) {
   if (--starv[i]) {
     stary[i] += 1 + Math.random() * 3;
     starx[i] += (i % 5 - 2) / 5;
-
     if (stary[i] < shigh + sdown) {
       star[i].style.top = stary[i] + "px";
       star[i].style.left = starx[i] + "px";
@@ -220,10 +211,10 @@ function updateSize() {
 }
 
 function createDiv(h, w) {
-  const div = document.createElement("div");
-  div.style.position = "absolute";
-  div.style.height = h + "px";
-  div.style.width = w + "px";
-  div.style.overflow = "hidden";
-  return div;
+  const d = document.createElement("div");
+  d.style.position = "absolute";
+  d.style.height = h + "px";
+  d.style.width = w + "px";
+  d.style.overflow = "hidden";
+  return d;
 }
