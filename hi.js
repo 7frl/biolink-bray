@@ -243,3 +243,24 @@ function createDiv(h, w) {
 
   return div;
 }
+
+// --------------------
+// VIEW COUNTER
+// --------------------
+
+const VIEW_NAMESPACE = "february-site";
+const VIEW_KEY = "february-page";
+
+fetch(`https://api.countapi.xyz/hit/${VIEW_NAMESPACE}/${VIEW_KEY}`)
+  .then(res => res.json())
+  .then(data => {
+    const viewEl = document.getElementById("viewCount");
+    if (viewEl) {
+      viewEl.textContent = data.value.toLocaleString();
+    }
+  })
+  .catch(() => {
+    const viewEl = document.getElementById("viewCount");
+    if (viewEl) viewEl.textContent = "—";
+  });
+
