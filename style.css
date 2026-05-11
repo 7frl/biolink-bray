@@ -160,11 +160,11 @@ body {
   color: white;
   font-size: 22px;
   transition: transform 0.25s ease;
-
   width: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: none; /* THIS fixes underline */
 }
 
 .icons a i {
