@@ -4,23 +4,15 @@
   box-sizing: border-box;
 }
 
-/* --------------------
-   BODY
--------------------- */
-
 body {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: #2b2d31;
+  background-color: #d0cfc9;
   color: white;
 }
-
-/* --------------------
-   ENTER
--------------------- */
 
 #enter {
   font-size: 36px;
@@ -37,10 +29,6 @@ body {
   text-shadow: 0 0 10px white;
 }
 
-/* --------------------
-   MAIN / VIDEO
--------------------- */
-
 #main {
   display: none;
   width: 100%;
@@ -50,19 +38,6 @@ body {
   position: relative;
 }
 
-#bgvid {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-
-/* --------------------
-   BASE
--------------------- */
-
 .base {
   display: flex;
   justify-content: center;
@@ -70,10 +45,6 @@ body {
   padding: 40px;
   z-index: 1;
 }
-
-/* --------------------
-   PROFILE CARD
--------------------- */
 
 .profile {
   width: 250px;
@@ -96,10 +67,6 @@ body {
   transform: scale(1.05);
 }
 
-/* --------------------
-   IMAGE
--------------------- */
-
 .image {
   width: 200px;
   height: 200px;
@@ -110,10 +77,6 @@ body {
   background-position: center;
   border-radius: 50%;
 }
-
-/* --------------------
-   NAME
--------------------- */
 
 .name {
   font-size: 24px;
@@ -137,10 +100,6 @@ body {
     0 0 40px white;
 }
 
-/* --------------------
-   VIEW COUNTER
--------------------- */
-
 #views {
   margin-top: 4px;
   margin-bottom: 10px;
@@ -160,13 +119,9 @@ body {
   font-size: 13px;
 }
 
-/* --------------------
-   ICONS
--------------------- */
-
 .icons {
   display: flex;
-  justify-content: center;
+  justify-content: center; so
   gap: 22px;
   margin-top: 2px;
 }
