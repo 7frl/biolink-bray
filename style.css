@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+/* --------------------
+   BODY
+-------------------- */
+
 body {
   height: 100vh;
   display: flex;
@@ -12,7 +16,12 @@ body {
   overflow: hidden;
   background-color: #d0cfc9;
   color: white;
+  font-family: 'Pangolin', cursive;
 }
+
+/* --------------------
+   ENTER
+-------------------- */
 
 #enter {
   font-size: 36px;
@@ -28,6 +37,10 @@ body {
   outline: none;
   text-shadow: 0 0 10px white;
 }
+
+/* --------------------
+   MAIN
+-------------------- */
 
 #main {
   display: none;
@@ -45,6 +58,10 @@ body {
   padding: 40px;
   z-index: 1;
 }
+
+/* --------------------
+   PROFILE CARD
+-------------------- */
 
 .profile {
   width: 250px;
@@ -67,6 +84,10 @@ body {
   transform: scale(1.05);
 }
 
+/* --------------------
+   IMAGE
+-------------------- */
+
 .image {
   width: 200px;
   height: 200px;
@@ -77,6 +98,10 @@ body {
   background-position: center;
   border-radius: 50%;
 }
+
+/* --------------------
+   NAME
+-------------------- */
 
 .name {
   font-size: 24px;
@@ -100,6 +125,10 @@ body {
     0 0 40px white;
 }
 
+/* --------------------
+   VIEW COUNTER
+-------------------- */
+
 #views {
   margin-top: 4px;
   margin-bottom: 10px;
@@ -115,13 +144,14 @@ body {
     0 0 12px rgba(255,255,255,0.4);
 }
 
-#views i {
-  font-size: 13px;
-}
+/* --------------------
+   ICONS FIXED
+-------------------- */
 
 .icons {
   display: flex;
-  justify-content: center; so
+  justify-content: center;
+  align-items: center;
   gap: 22px;
   margin-top: 2px;
 }
@@ -130,6 +160,11 @@ body {
   color: white;
   font-size: 22px;
   transition: transform 0.25s ease;
+
+  width: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .icons a i {
