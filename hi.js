@@ -3,8 +3,9 @@
 // --------------------
 
 const songs = [
-  "oo.mp3",
-  "xx.mp3"
+  "stoley @bry.mp3",
+  "untitled22 undrcvr usrhd bry.mp3",
+  "give me your all study usual bry.mp3"
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
